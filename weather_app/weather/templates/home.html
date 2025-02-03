@@ -1,1 +1,32 @@
-<h1> Hello World of weather enthusiasts </h1>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Data</title>
+</head>
+<body>
+    <h1> Hello World of weather enthusiasts </h1>
+    <h1>Weather Data</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Get Weather Data</button>
+    </form>
+
+    <table border="1">
+        <tr>
+            <th>Time</th>
+            <th>Temperature (°C)</th>
+        </tr>
+        {% for time, temp in get_data.items %}
+        <tr>
+            <td>{{ time }}</td>
+            <td>{{ temp }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
