@@ -8,8 +8,10 @@ def index(request):
     if request.method == "POST":
         form = CityForm(request.POST)
         if form.is_valid():
-            latitude = form.cleaned_data['latitude']
-            longitude = form.cleaned_data['longitude']
+            city = form.cleaned_data['city']
+            city_cords = utils.get_coordinates(city)
+            latitude = city_cords[0]
+            longitude = city_cords[1]
             data = utils.get_data_from_api(latitude, longitude)  # Fetch data using user input
     else:
         form = CityForm()
