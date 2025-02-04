@@ -29,18 +29,14 @@ def get_coordinates(city_name):
     }
     response = requests.get(url, params=params, headers=local_settings.HEADERS)
     data = response.json()
+    if data:
     
-    latitude = data[0]['lat']
-    longitude = data[0]['lon']
+        display_name = data[0]['display_name']
 
-    return latitude, longitude
+        latitude = data[0]['lat']
+        longitude = data[0]['lon']
 
-# def get_data():
-#     with open("test.json", "r") as file:
-#         data = json.load(file)
-
-#     new_data = zip(data['hourly']['time'], data['hourly']['temperature_2m'])
-
-#     time_temp = { k:v for (k,v) in new_data}
-
-#     return time_temp
+        return latitude, longitude, display_name
+    
+    else:
+        return False
