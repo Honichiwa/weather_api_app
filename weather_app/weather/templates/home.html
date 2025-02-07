@@ -25,12 +25,16 @@
         <tr>
             <th>Time</th>
             <th>Temperature (°C)</th>
+            <th>Precipitation probability (%)</th>
+            <th>Precipitation (mm)</th>
         </tr>
         {% if get_data.items %}
-        {% for time, temp in get_data.items %}
+        {% for time, values in get_data.items %}
         <tr>
             <td>{{ time }}</td>
-            <td>{{ temp }}</td>
+            <td>{{ values.temperature_2m }}</td>
+            <td>{{ values.precipitation_probability }}</td>
+            <td>{{ values.precipitation }}</td>
         </tr>
         {% endfor %}
         {% endif %}
