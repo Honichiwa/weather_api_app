@@ -81,6 +81,29 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+#LOCAL Redis server config
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django.core.cache.backends.redis.RedisCache",
+#         "LOCATION": "redis://127.0.0.1:6379",
+#     }
+# }
+
+#redis cloud config
+CACHES = {
+        'default': {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            "LOCATION": f"redis://{local_settings.REDIS_HOST}:{local_settings.REDIS_PORT}/0",
+            'OPTIONS': {
+                'USERNAME': str("default"),
+                'PASSWORD': str(local_settings.REDIS_PSW),
+                'DB': 0,
+        }
+    }
+}
+
+
+CACHE_TTL = 60 * 720 
 
 
 # Password validation
