@@ -45,6 +45,7 @@ def get_data_from_api(latitude, longitude):
         cache.set(cache_key, (time_weather, elevation), timeout=CACHE_TTL)
 
         return time_weather, elevation
+#adding for git username test
 
 def get_coordinates(city_name):
 
