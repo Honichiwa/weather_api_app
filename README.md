@@ -74,7 +74,3 @@ Visit **http://127.0.0.1:8000/** in your browser.
 
 ## Contributing 🤝
 Feel free to fork the repo and submit a pull request!
-
-## License 📜
-MIT License © 2024 Honichiwa
-
