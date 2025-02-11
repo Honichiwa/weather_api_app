@@ -40,7 +40,9 @@ pip install -r requirements.txt
 ```
 
 ### Configure Redis
-Make sure you have a running Redis server. Update `settings.py` with your Redis configuration:
+Make sure you have a running Redis server. -> https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/
+
+Update `settings.py` with your Redis configuration:
 ```python
 CACHES = {
     'default': {
