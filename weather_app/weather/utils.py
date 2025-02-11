@@ -5,9 +5,14 @@ from weather_app.settings import CACHE_TTL
 from django.core.cache import cache
 
 def get_data_from_api(latitude, longitude):
+    """
+    Fetches weather data from the Open-Meteo API for the given latitude and longitude.
 
+    Returns:
+    A tuple containing a dictionary of time-temperature pairs and the elevation.
+    """
+    #Checks if the coordinates you are searching for is in redis cache
     cache_key = f"weather_{latitude}_{longitude}"
-    print(cache_key)
     cached_data = cache.get(cache_key)
 
     if cached_data:
@@ -41,14 +46,19 @@ def get_data_from_api(latitude, longitude):
                 hourly_data["precipitation"]
             )
         }
-
+        #Caches the weather information of the coordinates for specified time: CACHE_TTL
         cache.set(cache_key, (time_weather, elevation), timeout=CACHE_TTL)
 
         return time_weather, elevation
-#adding for git username test
 
 def get_coordinates(city_name):
+    """
+    Fetches coordinates for a given city name using the Nominatim API.
 
+    Returns:
+    A tuple containing latitude, longitude, and display name if found, else None.
+    """
+    #Checks if the city you are searching for is in redis cache
     cache_key = f"coordinates_{city_name}"
     cached_data = cache.get(cache_key)
 
@@ -62,18 +72,17 @@ def get_coordinates(city_name):
         'format': 'json',
         'limit': 1
     }
+    # HEADERS == {'User-Agent' : 'yourProjectName1.0 (your.email@.email.com)'}
     response = requests.get(url, params=params, headers=local_settings.HEADERS)
     data = response.json()
+
     if data:
-    
         display_name = data[0]['display_name']
-
-        latitude = data[0]['lat']
-        longitude = data[0]['lon']
-
+        latitude = float(data[0]['lat'])
+        longitude = float(data[0]['lon'])
+        #Caches the coordinates of the searched city for specified time: CACHE_TTL
         cache.set(cache_key, (latitude, longitude, display_name), timeout=CACHE_TTL)
-
+        
         return latitude, longitude, display_name
-    
     else:
         return False

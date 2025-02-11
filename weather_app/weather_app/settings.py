@@ -89,21 +89,24 @@ DATABASES = {
 #     }
 # }
 
-#redis cloud config
+#Redis Cloud config
 CACHES = {
         'default': {
             'BACKEND': 'django_redis.cache.RedisCache',
+            #location = your redis cloud url + port
             "LOCATION": f"redis://{local_settings.REDIS_HOST}:{local_settings.REDIS_PORT}/0",
             'OPTIONS': {
+                #Your redis cloud database given username which is "default" by default
+                #and redis cloud database password which u can find on the database dashoard
+                #IMPORTNANT ! make sure to pass them both as str() even if they already are in str format
                 'USERNAME': str("default"),
                 'PASSWORD': str(local_settings.REDIS_PSW),
                 'DB': 0,
         }
     }
 }
-
-
-CACHE_TTL = 60 * 720 
+# Data being in cache before delletion. (seconds)
+CACHE_TTL = 60 * 60 * 12 
 
 
 # Password validation
