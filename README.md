@@ -39,6 +39,33 @@ venv\Scripts\activate  # Activate on Windows
 pip install -r requirements.txt
 ```
 
+
+### Create and update local_settings.py file
+Create `local_settings.py` file in `weather_app/weather_app` next to django `settings.py`
+
+Make django secret key:
+```sh
+django-admin shell
+```
+```sh
+from django.core.management.utils import get_random_secret_key  
+get_random_secret_key()
+```
+Copy generated secret key to `local_settings.py`:
+```python
+SECRET_KEY = "(your_generated_random_secret_key)"
+```
+Add rest of needed constants such as Headers for api, redis_psw, redis_host, redis_port:
+```python
+HEADERS = {'User-Agent' : 'your_project_name (your_email@email.com)'}
+
+REDIS_PSW = '*******'
+
+REDIS_HOST = '*****'
+
+REDIS_PORT = *****
+```
+
 ### Configure Redis
 Make sure you have a running Redis server. -> https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/
 
