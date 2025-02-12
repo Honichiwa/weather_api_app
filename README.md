@@ -55,7 +55,7 @@ Copy generated secret key to `local_settings.py`:
 ```python
 SECRET_KEY = "(your_generated_random_secret_key)"
 ```
-Add rest of needed constants such as Headers for api, redis_psw, redis_host, redis_port:
+Add rest of needed constants such as Headers for api and redis_psw, redis_host, redis_port if you are using Redis cloud:
 ```python
 HEADERS = {'User-Agent' : 'your_project_name (your_email@email.com)'}
 
@@ -66,7 +66,8 @@ REDIS_HOST = '*****'
 REDIS_PORT = *****
 ```
 
-### Configure Redis
+### Configure Redis for local server
+
 Make sure you have a running Redis server. -> https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/
 
 Update `settings.py` with your Redis configuration:
@@ -77,6 +78,27 @@ CACHES = {
         'LOCATION': 'redis://127.0.0.1:6379/1',
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+```
+
+### Configure Redis for Redis cloud
+
+Update `settings.py` with your Redis configuration:
+```python
+CACHES = {
+        'default': {
+            'BACKEND': 'django_redis.cache.RedisCache',
+            #location = your redis cloud url + port
+            "LOCATION": f"redis://{local_settings.REDIS_HOST}:{local_settings.REDIS_PORT}/0",
+            'OPTIONS': {
+                #Your redis cloud database given username which is "default" by default
+                #and redis cloud database password which u can find on the database dashoard
+                #IMPORTNANT ! make sure to pass them both as str() even if they already are in str format
+                'USERNAME': str("default"),
+                'PASSWORD': str(local_settings.REDIS_PSW),
+                'DB': 0,
         }
     }
 }
